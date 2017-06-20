@@ -29,10 +29,11 @@ __Methods__
 * __str__(self)
   - Returns string
     ~ water or hidden part of ship
-    X hit
-    O miss
+    X hit ship part
+    O unhit ship part
+   " " hit water
   - Text appropriate representation of the element
 
-* hit(self)
+* change_state(self, state)
   - Returns None
-  - Change is_hit attribute to True
+  - Change state attribute to given value
