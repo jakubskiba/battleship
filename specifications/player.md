@@ -7,7 +7,7 @@ Object represents one of the players
 __Attributes__
 * 'name'
   - data: string
-  - description: player's name
+  - description: player's name (default = 'computer')
 
 * 'oceans'
   - data: dict
