@@ -40,14 +40,14 @@ __Attributes__
 
 
 __Methods__
-* __init__(self, star_row, start_column, name)
+* __init__(self, star_row, start_column, name, is_vertical)
   - Returns None
   - Description: Constructor method for element
 
 * get_ship_length(self)
   - Returns int
 
-* get_ship_name(self, length)
+* get_ship_name(self)
   - Returns: str
   - Description: gets names of the ship from their length
 
@@ -58,7 +58,3 @@ __Methods__
 * __str__(self)
   - Returns: string
   - Description: Text representation of the element
-
-* check_is_sunk(self)
-  - Returns None
-  - Description: Change is_hit attribute to True
