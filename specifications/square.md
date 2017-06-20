@@ -28,10 +28,10 @@ __Methods__
 
 * __str__(self)
   - Returns string
-    ~ water or hidden part of ship
-    X hit ship part
-    O unhit ship part
+   "~" unhit water
    " " hit water
+   "x" hit ship part
+   "o" unhit ship part
   - Text appropriate representation of the element
 
 * change_state(self, state)
