@@ -28,7 +28,15 @@ __Attributes__
 * 'name'
   - data: str
   - description: type of the ship
-  
+
+* 'is_vertical'
+  - data: bool
+  - description: True if ship is vertical
+
+* 'is_hit'
+  - data:bool
+  - description: True if all ship squares are hit
+
 
 
 __Methods__
@@ -43,7 +51,7 @@ __Methods__
   - Returns: str
   - Description: gets names of the ship from their length
 
-* generate_squares(self)
+* generate_ship(self)
   - Returns: None
   - Description: creates and appends square objects to the squares list
 
@@ -54,4 +62,3 @@ __Methods__
 * check_is_sunk(self)
   - Returns None
   - Description: Change is_hit attribute to True
-

@@ -13,13 +13,13 @@ __Attributes__
   - data: int
   - description: x coordinate
 
-* 'is_hit'
-  - data: bool
-  - description: True if hit
-
-* 'is_ships_part'
-  - data: bool
-  - description: True if part of the ship, False if water
+* 'state'
+  - data: str
+  - description:
+    - "~" unhit water
+    - " " hit water
+    - "o" unhit ship part
+    - "x" hit ship part
 
 __Methods__
 * __init__(self, row, column)

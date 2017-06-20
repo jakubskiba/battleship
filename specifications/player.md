@@ -15,13 +15,19 @@ __Attributes__
         - key: owner's name
         - value: ocean object
 
+* 'my_turn'
+    - data: bool
+    - description: True if this player turn
+
+* 'is_human'
+    - data: bool
+    - description: True if player is human
+
 __Methods__
-* __init__(self, name, ships_coordinates)
+* __init__(self, name)
   - Returns None
   - Description: Constructor method for element
 
 * __str__(self)
   - Returns string
   - Name
-
-
