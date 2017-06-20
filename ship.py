@@ -1,3 +1,6 @@
+from square import Square
+
+
 class Ship:
     def __init__(self, start_row, start_column, name, is_vertical):
         """
@@ -40,19 +43,19 @@ class Ship:
                 self.squares.append(Square(self.start_row + i, self.start_column))
             else:
                 self.squares.append(Square(self.start_row, self.start_column + i))
-            self.squares[-1].change_state('O')
+            self.squares[-1].change_state('o')
 
     @property
     def is_hit(self):
         for square in self.squares:
-            if square.state = 'X':
+            if square.state == 'x':
                 return True
         return False
 
     @property
     def is_sunk(self):
         for square in self.squares:
-            if square.state = 'O':
+            if square.state == 'o':
                 return False
         return True
 
@@ -70,7 +73,17 @@ class Ship:
 
 
 def main():
-    pass
+    ship = Ship(3, 5, 'Carrier', True)
+    print(ship)
+    ship.squares[-3].change_state('x')
+    print(ship)
+    print(ship.is_hit)
+    print(ship.is_sunk)
+    for i in range(5):
+        ship.squares[i].change_state('x')
+    print(ship)
+    print(ship.is_hit)
+    print(ship.is_sunk)
 
 
 if __name__ == '__main__':
