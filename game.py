@@ -7,7 +7,7 @@ class Game:
             None
         """
 
-        self.players = {first: Player(), second: Player()}
+        self.players = {"first": Player(), "second": Player()}
 
     def check_whose_turn(self):
         """
