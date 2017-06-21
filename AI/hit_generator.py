@@ -1,5 +1,6 @@
 from AI.difficulty_level import DifficultyLevel
-from AI.level import easyAI
+from AI.level.easyAI import EasyAI
+from AI.level.normalAI import NormalAI
 
 
 class HitGenerator:
@@ -12,14 +13,13 @@ class HitGenerator:
         drawn_coordinates = None
 
         if self.level == 1:
-            drawn_coordinates = easyAI.hit_location()
+            drawn_coordinates = EasyAI().draw_location_to_hit()
         elif self.level == 2:
-            pass
-            # normalAI.xxx()
+            drawn_coordinates = NormalAI().draw_location_to_hit()
         elif self.level == 3:
             pass
             # hardAI.xxx()
         else:
-            raise ValueError("Invalid level")
+            raise ValueError("Invalid difficulty level")
 
         return drawn_coordinates
