@@ -17,6 +17,7 @@ class Ocean:
         self.ships = []
         self.board = []
         self.is_owner_looking = False
+        self.generate_board()
 
     def generate_board(self):
         """
