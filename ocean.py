@@ -126,13 +126,15 @@ class Ocean:
         return True
 
     def __str__(self):
-        board = ''
+        column_indexes = [chr(i) for i in range(65, 75)]
+        first_row = ' '.join(column_indexes) + '\n'
+        board = first_row
         for row in range(10):
             for column in range(10):
                 current_square = str(self.board[row][column])
-                if current_square == 'o' and not self.is_owner_looking:
+                if current_square == '□' and not self.is_owner_looking:
                     board += '~'
                 else:
                     board += current_square + ' '
-            board += '\n'
+            board += str(row + 1) + '\n'
         return board
