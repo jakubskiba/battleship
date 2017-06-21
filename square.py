@@ -19,6 +19,7 @@ class Square:
     def __repr__(self):
         return self.state
 
+    '''
     def __is_change_possible(self, state):
         """
         Checks correctness of changes
@@ -34,6 +35,7 @@ class Square:
             return True
         else:
             return False
+    '''
 
     def change_state(self, state):
         """
@@ -42,12 +44,11 @@ class Square:
         Args:
             state (str): new state
         """
-        if self.__is_change_possible(state):
-            self.state = state
 
-        '''
-        # proposed feature
+        self.state = state
+
+    def can_be_hit(self):
+        if self.state in ['~', '□']:
             return True
         else:
             return False
-        '''

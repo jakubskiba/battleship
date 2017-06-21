@@ -8,7 +8,9 @@ class Ocean:
     Object represents whole game board for one player
 
     Attributes:
-        ships(list): list of ships
+        ships(dict): dictionary of ships
+            key(str): ship name
+            value(obj): object of class Ship
         board(list): list of every square of the board
         is_owner_looking(bool): affects on the text representation of the board
     """
@@ -17,6 +19,7 @@ class Ocean:
         self.ships = []
         self.board = []
         self.is_owner_looking = False
+        self.generate_board()
 
     def generate_board(self):
         """
