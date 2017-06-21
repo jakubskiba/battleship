@@ -1,7 +1,6 @@
 from difficulty_level import DifficultyLevel
 import easyAI
 
-
 class HitGenerator:
     def __init__(self):
         self.level = DifficultyLevel()
