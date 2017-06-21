@@ -31,5 +31,3 @@ class Player:
         else:
             is_human = '(C)'
         return 'name: ' + self.name + is_human
-
-    
