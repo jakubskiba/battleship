@@ -8,7 +8,9 @@ class Ocean:
     Object represents whole game board for one player
 
     Attributes:
-        ships(list): list of ships
+        ships(dict): dictionary of ships
+            key(str): ship name
+            value(obj): object of class Ship
         board(list): list of every square of the board
         is_owner_looking(bool): affects on the text representation of the board
     """
@@ -104,6 +106,7 @@ class Ocean:
         """
         ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
         for ship_name in ships_names:
+            print(self)
             ship_placed = False
             while not ship_placed:
                 new_ship = self.__generate_single_ship(ship_name)

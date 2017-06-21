@@ -1,10 +1,11 @@
 from ocean import Ocean
 
+
 class Player:
     """
     Attributes:
         name(str)
-        oceans(dict)
+        ocean(obj)
         my_turn(bool)
     """
 
@@ -22,6 +23,13 @@ class Player:
             self.is_human = True
         self.my_turn = False
 
+    @property
+    def is_human(self):
+        if self.name == 'computer':
+            return False
+        else:
+            return True
+
     def __str__(self):
         """
         Returns:
@@ -32,3 +40,5 @@ class Player:
         else:
             is_human = '(C)'
         return 'name: ' + self.name + is_human
+
+    
