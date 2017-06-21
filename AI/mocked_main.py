@@ -7,7 +7,7 @@ def main():
     difficulty_level.set_level("normal")
 
     artificial_intelligence = ArtificialIntelligence(difficulty_level.level)
-    print(artificial_intelligence.level)
+    print(artificial_intelligence.__dict__)
 
 if __name__ == "__main__":
     main()
