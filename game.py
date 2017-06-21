@@ -1,3 +1,6 @@
+from player import Player
+
+
 class Game:
     def __init__(self):
         """
@@ -9,7 +12,8 @@ class Game:
 
         self.players = {"first": Player(), "second": Player()}
 
-    def check_whose_turn(self):
+
+    def get_operating_player(self):
         """
         Method checks both objects of class Player and returns Player with attribute my_turn = True
 
@@ -19,6 +23,18 @@ class Game:
 
         for key in self.players:
             if self.players[key].my_turn:
+                return self.players[key]
+
+    def get_waiting_player(self):
+        """
+        Method checks both objects of class Player and returns Player with attribute my_turn = False
+
+        Returns:
+            obj of class Player
+        """
+
+        for key in self.players:
+            if not self.players[key].my_turn:
                 return self.players[key]
 
     def switch_turn(self):

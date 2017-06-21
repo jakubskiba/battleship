@@ -43,19 +43,19 @@ class Ship:
                 self.squares.append(Square(self.start_row + i, self.start_column))
             else:
                 self.squares.append(Square(self.start_row, self.start_column + i))
-            self.squares[-1].change_state('o')
+            self.squares[-1].change_state('□')
 
     @property
     def is_hit(self):
         for square in self.squares:
-            if square.state == 'x':
+            if square.state == 'X':
                 return True
         return False
 
     @property
     def is_sunk(self):
         for square in self.squares:
-            if square.state == 'o':
+            if square.state == '□':
                 return False
         return True
 
@@ -80,7 +80,7 @@ def main():
     print(ship.is_hit)
     print(ship.is_sunk)
     for i in range(5):
-        ship.squares[i].change_state('x')
+        ship.squares[i].change_state('X')
     print(ship)
     print(ship.is_hit)
     print(ship.is_sunk)
