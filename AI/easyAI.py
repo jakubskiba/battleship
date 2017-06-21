@@ -1,11 +1,13 @@
 from ocean import Ocean
+from AI.abstractAI import AbstractAI
+import random
 
-import game
 
-class EasyAI:
+class EasyAI(AbstractAI):
     def __init__(self):
-        self.board = Ocean()
+        super().__init__()
 
-easyAi = EasyAI()
-
-print(easyAi.board)
+    def hit_location(self):
+        row_num = random.randint(1, len(self.board.board[0]))
+        column_num = random.randint(1, len(self.board.board[0]))
+        return row_num, column_num
