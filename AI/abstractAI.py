@@ -5,5 +5,5 @@ class AbstractAI:
         self.board = Ocean()
         self.board.generate_board()
 
-        def hit(self):
+        def hit_location(self):
             pass
