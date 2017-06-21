@@ -1,7 +1,5 @@
-from ocean import Ocean
 from AI.abstractAI import AbstractAI
 import random
-
 
 class EasyAI(AbstractAI):
     def __init__(self):
