@@ -2,28 +2,58 @@ from AI.abstractAI import AbstractAI
 import random
 
 
-class EasyAI(AbstractAI):
+class NormalAI(AbstractAI):
     def __init__(self):
         super().__init__()
 
     @staticmethod
     def draw_pattern_type():
-        return random.randint(0, 2)
+        return random.randint(1, 1)
 
     def draw_location(self):
         row_num = random.randint(0, len(self.ocean.board[0]) - 1)
         column_num = random.randint(0, len(self.ocean.board[0]) - 1)
         return row_num, column_num
 
+    @staticmethod
+    def check_parity(row_num, column_num):
+        if (row_num + column_num) % 2 == 0:
+            return True
+        else:
+            return False
+
     def hit_location(self):
+        final_result = None
+        pattern_type = self.draw_pattern_type()
+        print(pattern_type)
         row_num, column_num = self.draw_location()
-        while not self.ocean.board[row_num][column_num].can_be_hit():
-            if self.draw_pattern_type() == 0:
-                while row_num % 2 != 0:
-                    row_num, column_num = self.draw_location()
+        print(row_num, column_num)
+        if pattern_type == 0 and self.check_parity(row_num, column_num):
+            print("parzyste")
+            final_result = row_num, column_num
+        elif pattern_type == 1 and not self.check_parity(row_num, column_num):
+            print("nieparzyste")
+            final_result = row_num, column_num
+        else:
+            self.hit_location() # Po wyniku z if / else i tak odpala się rekurencja,
+                                # która powoduje kolejne wejście do metody i zwraca None
 
-            if self.draw_pattern_type() == 1:
-                while row_num % 2 == 0:
-                    row_num, column_num = self.draw_location()
+        return final_result
 
-        return row_num, column_num
+
+        # scope = self.ocean.board[row_num][column_num].can_be_hit()
+        # if self.draw_pattern_type() == 0:
+        #     while scope or self.check_parity(row_num, column_num):
+        #         print("parzyste")
+        #         row_num, column_num = self.draw_location()
+        #
+        # if self.draw_pattern_type() == 1:
+        #     while scope or not self.check_parity(row_num, column_num):
+        #         row_num, column_num = self.draw_location()
+        #         scope = False
+        #         print(scope, row_num, column_num)
+
+        # return row_num, column_num
+
+normalAI = NormalAI()
+print(normalAI.hit_location())
