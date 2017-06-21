@@ -1,5 +1,5 @@
 class Difficulty_level:
-    def __init__(self):
+    def __init__(self, name=''):
         self.name = "easy"
         self.level = 1
         self.set_level(name)
