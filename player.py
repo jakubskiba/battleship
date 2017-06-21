@@ -12,6 +12,15 @@ class Player:
     def __init__(self, name='computer'):
         self.name = name
         self.ocean = Ocean()
+        self.enemy_ocean = Ocean()
+        self.my_turn = False
+
+    @property
+    def is_human(self):
+        if self.name == 'computer':
+            return False
+        else:
+            self.is_human = True
         self.my_turn = False
 
     @property

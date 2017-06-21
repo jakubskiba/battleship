@@ -6,6 +6,7 @@ class EasyAI(AbstractAI):
         super().__init__()
 
     def hit_location(self):
-        row_num = random.randint(1, len(self.board.board[0]))
-        column_num = random.randint(1, len(self.board.board[0]))
-        return row_num, column_num
+        row_num = random.randint(0, len(self.ocean.board[0])-1)
+        column_num = random.randint(0, len(self.ocean.board[0])-1)
+        if self.ocean.board[row_num][column_num].can_be_hit():
+            return row_num, column_num
