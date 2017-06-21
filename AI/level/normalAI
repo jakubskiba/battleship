@@ -10,8 +10,20 @@ class EasyAI(AbstractAI):
     def draw_pattern_type():
         return random.randint(0, 2)
 
+    def draw_location(self):
+        row_num = random.randint(0, len(self.ocean.board[0]) - 1)
+        column_num = random.randint(0, len(self.ocean.board[0]) - 1)
+        return row_num, column_num
+
     def hit_location(self):
-        row_num = random.randint(0, len(self.ocean.board[0])-1)
-        column_num = random.randint(0, len(self.ocean.board[0])-1)
-        if self.ocean.board[row_num][column_num].can_be_hit():
-            return row_num, column_num
+        row_num, column_num = self.draw_location()
+        while not self.ocean.board[row_num][column_num].can_be_hit():
+            if self.draw_pattern_type() == 0:
+                while row_num % 2 != 0:
+                    row_num, column_num = self.draw_location()
+
+            if self.draw_pattern_type() == 1:
+                while row_num % 2 == 0:
+                    row_num, column_num = self.draw_location()
+
+        return row_num, column_num
