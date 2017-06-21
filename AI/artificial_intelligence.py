@@ -4,11 +4,11 @@ from AI.level.normalAI import NormalAI
 
 class ArtificialIntelligence:
 
-    def __init__(self, level):
+    def __init__(self, difficulty_level):
         position_y = 0
         position_x = 1
 
-        self.level = level
+        self.level = difficulty_level.level
         self.coordY = self.determine_where_to_hit()[position_y]
         self.coordX = self.determine_where_to_hit()[position_x]
 
