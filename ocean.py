@@ -106,6 +106,7 @@ class Ocean:
         """
         ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
         for ship_name in ships_names:
+            print(self)
             ship_placed = False
             while not ship_placed:
                 new_ship = self.__generate_single_ship(ship_name)

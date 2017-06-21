@@ -19,24 +19,6 @@ class Square:
     def __repr__(self):
         return self.state
 
-    '''
-    def __is_change_possible(self, state):
-        """
-        Checks correctness of changes
-        """
-
-        if self.state == '~' and state == ' ':
-            return True
-
-        elif self.state == '~' and state == 'o':
-            return True
-
-        elif self.state == 'o' and state == 'x':
-            return True
-        else:
-            return False
-    '''
-
     def change_state(self, state):
         """
         Changes state attribute
@@ -46,6 +28,13 @@ class Square:
         """
 
         self.state = state
+
+    def hit(self):
+        """
+        """
+
+        possible_changes = {'~': 'O', '□': 'X'}
+        return possible_changes[self.state]
 
     def can_be_hit(self):
         if self.state in ['~', '□']:

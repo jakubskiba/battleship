@@ -4,10 +4,11 @@ from random import randint
 
 def choose_game_mode():
     possible_modes = {'1': 'PvP', '2': 'PvC', '3': 'CvC'}
-    menu = '''1. PvP
+    menu = '''
+    1. PvP
     2. PvC
     3. CvC
-    ''''
+    '''
     print(menu)
     game_mode = ''
     while game_mode not in possible_modes:
@@ -15,7 +16,7 @@ def choose_game_mode():
     return possible_modes[game_mode]
 
 
-def set_players_names(game_mode):
+def set_players_names(game, game_mode):
     """
     Returns:
         None
@@ -70,11 +71,13 @@ def get_coordinates(game):
     else:
         row, column = get_shot_coordinates_from_AI()
 
+    return row, column
+
 
 def main():
     game_mode = choose_game_mode()
     game = Game()
-    set_players_names(game_mode)
+    set_players_names(game, game_mode)
 
     # set_ai_level()
 
@@ -83,13 +86,19 @@ def main():
 
     waiting_player = game.get_waiting_player()
     current_player = game.get_operating_player()
+
+    # wstawianie statków
+    current_player.ocean.generate_ships()
+    waiting_player.ocean.generate_ships()
+
     while not waiting_player.ocean.end_game():
-        # tu dzieje się gra
+        # tu dzieje się gra / chyba gotowe
 
         row, column = get_coordinates(game)
-        while current_player.ocean.board[row][column]
+        while not current_player.ocean.board[row][column].can_be_hit():
+            row, column = get_coordinates(game)
 
-
+        current_player.ocean.board[row][column].hit()
 
         game.switch_turn()
         waiting_player = game.get_waiting_player()
