@@ -1,5 +1,6 @@
-from AI.abstractAI import AbstractAI
 import random
+
+from AI.level.abstractAI import AbstractAI
 
 
 class EasyAI(AbstractAI):

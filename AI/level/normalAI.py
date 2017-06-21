@@ -1,5 +1,6 @@
-from AI.abstractAI import AbstractAI
 import random
+
+from AI.level.abstractAI import AbstractAI
 
 ODD_PATTERN = 1
 EVEN_PATTERN = 2

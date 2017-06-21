@@ -3,7 +3,7 @@ from AI.level.easyAI import EasyAI
 from AI.level.normalAI import NormalAI
 
 
-class HitGenerator:
+class ArtificialIntelligence:
     def __init__(self):
         self.level = DifficultyLevel()
         self.coordX = self.generate_hit()[0]
