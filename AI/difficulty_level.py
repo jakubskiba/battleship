@@ -5,9 +5,9 @@ class DifficultyLevel:
         self.set_level(name)
 
     def set_level(self, name):
-        if self.name == "easy":
+        if name == "easy":
             self.level = 1
-        elif self.name == "normal":
+        elif name == "normal":
             self.level = 2
-        elif self.name == "hard":
+        elif name == "hard":
             self.level = 3
