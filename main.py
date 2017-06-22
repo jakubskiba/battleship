@@ -74,6 +74,14 @@ def get_coordinates(game):
     return row, column
 
 
+def set_and_print_hit_info(message, waiting_player, row, column):
+    print(message)
+    if message == 'Hit!':
+        for ship in waiting_player.ocean.ships:
+            if waiting_player.ocean.board[row][column] in ship.squares and ship.is_sunk:
+                print('Hit and sunk!')
+
+
 def main():
     game_mode = choose_game_mode()
     game = Game()
@@ -97,10 +105,6 @@ def main():
     waiting_player.ocean.generate_ships()
 
     while not current_player.ocean.end_game():
-        print('TEST')
-        for ship in current_player.ocean.ships:
-            print(ship.name, ship.squares)
-
         # game main loop
 
         current_player.ocean.is_owner_looking = True
@@ -110,7 +114,8 @@ def main():
         while not waiting_player.ocean.board[row][column].can_be_hit():
             row, column = get_coordinates(game)
 
-        waiting_player.ocean.board[row][column].hit()
+        message = waiting_player.ocean.board[row][column].hit()
+        set_and_print_hit_info(message, waiting_player, row, column)
 
         game.switch_turn()
         waiting_player = game.get_waiting_player()
