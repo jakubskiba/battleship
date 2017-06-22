@@ -20,6 +20,20 @@ def choose_game_mode():
     return possible_modes[game_mode]
 
 
+def choose_ai_level():
+    possible_ai = {'1': 'easy', '2': 'normal', '3': 'hard'}
+    menu = '''
+    1. easy
+    2. normal
+    3. hard
+    '''
+    print(menu)
+    ai_level = ''
+    while ai_level not in possible_ai:
+        ai_level = input('Choose AI level: ')
+    return possible_ai[ai_level]
+
+
 def set_players_names(game, game_mode):
     """
     Returns:
@@ -212,11 +226,15 @@ def main():
 
     game_mode = choose_game_mode()
 
+    ai_level = 'easy'
+    if game_mode != 'PvP':
+        ai_level = choose_ai_level()
+
     game = Game()
     set_players_names(game, game_mode)
 
     difficulty_level = DifficultyLevel()
-    difficulty_level.set_level("normal")
+    difficulty_level.set_level(ai_level)
 
     artificial_intelligence = ArtificialIntelligence(difficulty_level)
 
