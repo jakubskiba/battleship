@@ -12,7 +12,6 @@ class Game:
 
         self.players = {"first": Player(), "second": Player()}
 
-
     def get_operating_player(self):
         """
         Method checks both objects of class Player and returns Player with attribute my_turn = True
@@ -62,6 +61,13 @@ class Game:
         spaces.update({i: 10 for i in range(1, 10)})
         whole_game_view = [current_str_board[i] + spaces[i] * ' ' + next_str_board[i] for i in range(11)]
         whole_game_view = names_row + '\n'.join(whole_game_view)
+
+        reset_color = '\033[0m'
+        whole_game_view = whole_game_view.replace('□', '\033[31m' + '□' + reset_color)
+        whole_game_view = whole_game_view.replace('~', '\033[34m' + '~' + reset_color)
+        whole_game_view = whole_game_view.replace('X', '\033[33m' + 'X' + reset_color)
+        whole_game_view = whole_game_view.replace('O', '\033[32m' + 'O' + reset_color)
+
         return whole_game_view
 
 
