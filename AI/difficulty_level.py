@@ -4,7 +4,7 @@ from AI.enum.enum import EASY as HARD
 
 
 class DifficultyLevel:
-    def __init__(self, name=''):
+    def __init__(self, name):
         self.name = name
         self.level = None
         self.set_level(name)
@@ -16,3 +16,5 @@ class DifficultyLevel:
             self.level = NORMAL
         elif name == "hard":
             self.level = HARD
+        else:
+            raise ValueError("There is no such option!")
