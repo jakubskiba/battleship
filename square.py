@@ -35,7 +35,11 @@ class Square:
         """
 
         possible_changes = {'~': 'O', '□': 'X'}
+        hit_messages = {'~': 'Miss!', '□': 'Hit!'}
+
+        message = hit_messages[self.state]
         self.state = possible_changes[self.state]
+        return message
 
     def can_be_hit(self):
         if self.state in ['~', '□']:

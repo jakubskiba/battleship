@@ -25,7 +25,7 @@ class ArtificialIntelligence:
             self.mode = HardAI(self.game)
 
     def determine_where_to_hit(self):
-        """
+        """determine_where_to_hit
         Method to choose where to hit -> which depends on difficulty level.
 
         :returns

@@ -8,7 +8,6 @@ def main():
     difficulty_level.set_level("hard")
     game = Game()
 
-
     AI = ArtificialIntelligence(difficulty_level, game)
 
 if __name__ == "__main__":
