@@ -97,7 +97,12 @@ def main():
     waiting_player.ocean.generate_ships()
 
     while not current_player.ocean.end_game():
+        print('TEST')
+        for ship in current_player.ocean.ships:
+            print(ship.name, ship.squares)
+
         # game main loop
+
         current_player.ocean.is_owner_looking = True
         waiting_player.ocean.is_owner_looking = False
         print(game)

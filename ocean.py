@@ -79,7 +79,7 @@ class Ocean:
                     continue
         return True
 
-    def __replace_squares(self, ship):
+    def __check_possibility_of_ship_placement(self, ship):
         """
             Simulates placement of each square of ship, if succeed makes real replacement
 
@@ -87,18 +87,23 @@ class Ocean:
                 (bool)
         """
 
-        board = deepcopy(self.board)
         for ship_square in ship.squares:
+            # czy nie wystaje
             try:
-                board_square = board[ship_square.row - 1][ship_square.column - 1]
+                board_square = self.board[ship_square.row - 1][ship_square.column - 1]
             except IndexError:
                 return False
+
+            # czy otoczenie jest puste
             if self.__check_square_availability(board_square.row, board_square.column):
-                board[ship_square.row - 1][ship_square.column - 1] = ship_square
+                continue
             else:
                 return False
-        self.board = board
         return True
+
+    def place_ship_on_board(self, new_ship):
+        for i in range(len(new_ship.squares)):
+            self.board[new_ship.squares[i].row - 1][new_ship.squares[i].column - 1] = new_ship.squares[i]
 
     def generate_ships(self):
         """
@@ -110,11 +115,17 @@ class Ocean:
         ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
         print(self)
         for ship_name in ships_names:
-            ship_placed = False
-            while not ship_placed:
+            # tworzenie nowego shipa
+            new_ship = self.__generate_single_ship(ship_name)
+
+            # sprawdzanie możliwości wstawienia
+            while not self.__check_possibility_of_ship_placement(new_ship):
+                print('wrong coordinates provided')
                 new_ship = self.__generate_single_ship(ship_name)
-                ship_placed = self.__replace_squares(new_ship)
+
+            # wstawianie go
             self.ships.append(new_ship)
+            self.place_ship_on_board(new_ship)
             print(self)
 
     def end_game(self):
