@@ -1,3 +1,4 @@
+import os
 from game import Game
 from ship import Ship
 from random import randint
@@ -157,7 +158,7 @@ def generate_single_ship(ship_name):
 
 def generate_ships(ocean):
     """
-    
+
     """
     ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
     print(ocean)
@@ -170,7 +171,27 @@ def generate_ships(ocean):
         print(ocean)
 
 
+def intro(file_name):
+    """Function displays intro image.
+
+    Args:
+        file_name: name of the file with image art
+    """
+
+    color = ['\033[31m', '\033[32m', '\033[33m', '\033[34m', '\033[35m', '\033[36m', '\033[37m']
+    reset_color = '\033[0m'
+
+    with open(file_name, 'r') as img_file:
+        images = img_file.read()
+
+    os.system('clear')
+    print(images)
+    input('Press ENTER to continue')
+
+
 def main():
+    intro('additional_files/intro_art.txt')
+
     game_mode = choose_game_mode()
     game = Game()
     set_players_names(game, game_mode)
@@ -208,6 +229,8 @@ def main():
         game.switch_turn()
         waiting_player = game.get_waiting_player()
         current_player = game.get_operating_player()
+
+    print('Congratulations!', waiting_player.name, 'won!')
 
 
 if __name__ == '__main__':
