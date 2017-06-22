@@ -2,10 +2,12 @@ from ocean import Ocean
 
 
 class AbstractAI:
-    def __init__(self, game):
+    def __init__(self, game, last_hit, taken_hits):
         self.my_board = None
         self.enemy_board = None
         self.set_board(self.my_board, self.enemy_board, game)
+        self.last_hit = last_hit
+        self.taken_hits = []
 
     def set_board(self, my_board, enemy_board, game):
         if game.players.get("first").name == "computer":
