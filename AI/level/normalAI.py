@@ -7,8 +7,8 @@ EVEN_PATTERN = 2
 
 
 class NormalAI(AbstractAI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game):
+        super().__init__(game)
 
     @staticmethod
     def draw_pattern_type():
