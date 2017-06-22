@@ -7,8 +7,8 @@ EVEN_PATTERN = 2
 
 
 class HardAI(AbstractAI):
-    def __init__(self, last_hit):
-        super().__init__()
+    def __init__(self, game, last_hit):
+        super().__init__(game)
         self.last_hit = last_hit
 
     def calculate_probability(self):
