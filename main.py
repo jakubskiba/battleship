@@ -1,4 +1,5 @@
 import os
+import time
 from game import Game
 from ship import Ship
 from random import randint, choice
@@ -18,6 +19,20 @@ def choose_game_mode():
     while game_mode not in possible_modes:
         game_mode = input('Choose game mode: ')
     return possible_modes[game_mode]
+
+
+def choose_ai_level():
+    possible_ai = {'1': 'easy', '2': 'normal', '3': 'hard'}
+    menu = '''
+    1. easy
+    2. normal
+    3. hard
+    '''
+    print(menu)
+    ai_level = ''
+    while ai_level not in possible_ai:
+        ai_level = input('Choose AI level: ')
+    return possible_ai[ai_level]
 
 
 def set_players_names(game, game_mode):
@@ -204,7 +219,6 @@ def intro(file_name):
 
     os.system('clear')
     print(images)
-    input('Press ENTER to continue')
 
 
 def read_highscore_file():
@@ -237,11 +251,15 @@ def main():
 
     game_mode = choose_game_mode()
 
+    ai_level = 'easy'
+    if game_mode != 'PvP':
+        ai_level = choose_ai_level()
+
     game = Game()
     set_players_names(game, game_mode)
 
     difficulty_level = DifficultyLevel()
-    difficulty_level.set_level("easy")
+    difficulty_level.set_level(ai_level)
 
     artificial_intelligence = ArtificialIntelligence(difficulty_level)
 
@@ -251,6 +269,8 @@ def main():
     waiting_player = game.get_waiting_player()
     current_player = game.get_operating_player()
 
+    os.system('clear')
+
     # placing ships
     current_player.ocean.is_owner_looking = True
     print(current_player.name, 'set your ships!')
@@ -258,6 +278,8 @@ def main():
         ask_user_for_ships(current_player.ocean)
     else:
         randomize_ships(current_player.ocean)
+
+    os.system('clear')
 
     waiting_player.ocean.is_owner_looking = True
     print(waiting_player.name, 'set your ships!')
@@ -271,18 +293,38 @@ def main():
 
         current_player.ocean.is_owner_looking = True
         waiting_player.ocean.is_owner_looking = False
+
+        os.system('clear')
+
         print(game)
         row, column = get_coordinates(game, artificial_intelligence)
         while not waiting_player.ocean.board[row][column].can_be_hit():
             row, column = get_coordinates(game, artificial_intelligence)
 
         message = waiting_player.ocean.board[row][column].hit()
+
+        os.system('clear')
+        print(game)
+
         set_and_print_hit_info(message, waiting_player, row, column)
+
+        if current_player.is_human and waiting_player.is_human:
+            input('Press ENTER to continue')
+            os.system('clear')
+            intro('additional_files/cutscene.txt')
+            print('Press ENTER to continue ' + waiting_player.name)
+            input()
+        if current_player.is_human and not waiting_player.is_human:
+            input('Press ENTER to continue')
+
+        if game_mode == 'CvC':
+            time.sleep(0.1)
+            os.system('clear')
 
         game.switch_turn()
         waiting_player = game.get_waiting_player()
         current_player = game.get_operating_player()
-
+    print(game)
     print('Congratulations!', waiting_player.name, 'won!')
     score = str(waiting_player.count_unhited_squares())
     highscores = read_highscore_file()
