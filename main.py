@@ -215,8 +215,7 @@ def main():
     game = Game()
     set_players_names(game, game_mode)
 
-    difficulty_level = DifficultyLevel()
-    difficulty_level.set_level("normal")
+    difficulty_level = DifficultyLevel("hard")
 
     artificial_intelligence = ArtificialIntelligence(difficulty_level)
 
