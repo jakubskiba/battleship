@@ -1,7 +1,9 @@
 import os
 from game import Game
 from ship import Ship
-from random import randint
+from random import randint, choice
+from AI.artificial_intelligence import ArtificialIntelligence
+from AI.difficulty_level import DifficultyLevel
 
 
 def choose_game_mode():
@@ -31,9 +33,6 @@ def set_players_names(game, game_mode):
     elif game_mode == 'PvC':
         game.players['first'].name = input('Provide first player name: ')
 
-    elif game_mode == 'CvC':
-        pass
-
 
 def randomize_players_order():
     which_player = randint(1, 2)
@@ -62,12 +61,12 @@ def get_shot_coordinates_from_user():
     return row, column
 
 
-def get_shot_coordinates_from_AI():
-    # INPUT AI HERE
-    pass
+def get_shot_coordinates_from_AI(artificial_intelligence):
+    hit_coordinates = artificial_intelligence.determine_where_to_hit()
+    return hit_coordinates
 
 
-def get_coordinates(game):
+def get_coordinates(game, artificial_intelligence):
     """
     Switches shot coordinates input
     """
@@ -75,7 +74,7 @@ def get_coordinates(game):
     if game.get_operating_player().is_human:
         row, column = get_shot_coordinates_from_user()
     else:
-        row, column = get_shot_coordinates_from_AI()
+        row, column = get_shot_coordinates_from_AI(artificial_intelligence)
 
     return row, column
 
@@ -156,7 +155,7 @@ def generate_single_ship(ship_name):
     return Ship(row, column, ship_name, is_vertical)
 
 
-def generate_ships(ocean):
+def ask_user_for_ships(ocean):
     """
 
     """
@@ -169,6 +168,25 @@ def generate_ships(ocean):
         ocean.ships.append(new_ship)
         ocean.place_ship_on_board(new_ship)
         print(ocean)
+
+
+def randomize_single_ship(ship_name):
+    row = randint(1, 10)
+    column = randint(1, 10)
+    is_vertical = choice([False, True])
+    new_ship = Ship(row, column, ship_name, is_vertical)
+
+    return new_ship
+
+
+def randomize_ships(ocean):
+    ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
+    for ship_name in ships_names:
+        new_ship = randomize_single_ship(ship_name)
+        while not ocean.check_possibility_of_ship_placement(new_ship):
+            new_ship = randomize_single_ship(ship_name)
+        ocean.ships.append(new_ship)
+        ocean.place_ship_on_board(new_ship)
 
 
 def intro(file_name):
@@ -193,10 +211,14 @@ def main():
     intro('additional_files/intro_art.txt')
 
     game_mode = choose_game_mode()
+
     game = Game()
     set_players_names(game, game_mode)
 
-    # set_ai_level()
+    difficulty_level = DifficultyLevel()
+    difficulty_level.set_level("normal")
+
+    artificial_intelligence = ArtificialIntelligence(difficulty_level)
 
     starting_player = randomize_players_order()
     game.players[starting_player].my_turn = True
@@ -207,11 +229,17 @@ def main():
     # placing ships
     current_player.ocean.is_owner_looking = True
     print(current_player.name, 'set your ships!')
-    generate_ships(current_player.ocean)
+    if current_player.is_human:
+        ask_user_for_ships(current_player.ocean)
+    else:
+        randomize_ships(current_player.ocean)
 
     waiting_player.ocean.is_owner_looking = True
     print(waiting_player.name, 'set your ships!')
-    generate_ships(waiting_player.ocean)
+    if waiting_player.is_human:
+        ask_user_for_ships(waiting_player.ocean)
+    else:
+        randomize_ships(waiting_player.ocean)
 
     while not current_player.ocean.end_game():
         # game main loop
@@ -219,9 +247,9 @@ def main():
         current_player.ocean.is_owner_looking = True
         waiting_player.ocean.is_owner_looking = False
         print(game)
-        row, column = get_coordinates(game)
+        row, column = get_coordinates(game, artificial_intelligence)
         while not waiting_player.ocean.board[row][column].can_be_hit():
-            row, column = get_coordinates(game)
+            row, column = get_coordinates(game, artificial_intelligence)
 
         message = waiting_player.ocean.board[row][column].hit()
         set_and_print_hit_info(message, waiting_player, row, column)

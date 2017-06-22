@@ -41,8 +41,8 @@ class Ocean:
             Checks if it is possible to place square in specified coordinates
         """
 
-        for y in range(-1, 1):
-            for x in range(-1, 1):
+        for y in range(-1, 2):
+            for x in range(-1, 2):
                 try:
                     if str(self.board[row + y - 1][column + x - 1]) != '~':
                         return False
