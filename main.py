@@ -207,6 +207,31 @@ def intro(file_name):
     input('Press ENTER to continue')
 
 
+def read_highscore_file():
+    """
+    Returns:
+        list of strings
+            'points number: player name'
+    """
+
+    highscores = []
+
+    FILE_PATH = 'additional_files/hall_of_fame.csv'
+    with open(FILE_PATH, 'r') as f:
+        for line in f:
+            highscores.append(line.replace('\n', ''))
+
+    return sorted(highscores)
+
+
+def append_highscore_file():
+    """
+    """
+    FILE_PATH = 'additional_files/hall_of_fame.csv'
+    with open(FILE_PATH, 'w') as f:
+        pass
+
+
 def main():
     intro('additional_files/intro_art.txt')
 
@@ -216,7 +241,7 @@ def main():
     set_players_names(game, game_mode)
 
     difficulty_level = DifficultyLevel()
-    difficulty_level.set_level("normal")
+    difficulty_level.set_level("easy")
 
     artificial_intelligence = ArtificialIntelligence(difficulty_level)
 
@@ -259,6 +284,10 @@ def main():
         current_player = game.get_operating_player()
 
     print('Congratulations!', waiting_player.name, 'won!')
+    score = str(waiting_player.count_unhited_squares())
+    highscores = read_highscore_file()
+    highscores.append(score + ': ' + waiting_player.name)
+    print(highscores)
 
 
 if __name__ == '__main__':
