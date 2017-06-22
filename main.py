@@ -68,8 +68,9 @@ def get_shot_coordinates_from_AI():
 
 def get_coordinates(game):
     """
-
+    Switches shot coordinates input
     """
+
     if game.get_operating_player().is_human:
         row, column = get_shot_coordinates_from_user()
     else:
@@ -155,6 +156,9 @@ def generate_single_ship(ship_name):
 
 
 def generate_ships(ocean):
+    """
+    
+    """
     ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
     print(ocean)
     for ship_name in ships_names:
@@ -186,7 +190,7 @@ def main():
 
     waiting_player.ocean.is_owner_looking = True
     print(waiting_player.name, 'set your ships!')
-    generate_ships(current_player.ocean)
+    generate_ships(waiting_player.ocean)
 
     while not current_player.ocean.end_game():
         # game main loop
