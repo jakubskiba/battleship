@@ -7,8 +7,9 @@ EVEN_PATTERN = 2
 
 
 class HardAI(AbstractAI):
-    def __init__(self):
+    def __init__(self, last_hit):
         super().__init__()
+        self.last_hit = last_hit
 
     def calculate_probability(self):
         hitable_squares = 0
@@ -26,3 +27,5 @@ class HardAI(AbstractAI):
         for row in self.ocean.board:
             for square in row:
                 square.probability = self.calculate_probability()
+
+    def is_hit(self):
