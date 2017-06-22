@@ -1,4 +1,4 @@
-import os
+import os, time
 from game import Game
 from ship import Ship
 from random import randint, choice
@@ -62,7 +62,7 @@ def get_shot_coordinates_from_user():
 
 
 def get_shot_coordinates_from_AI(artificial_intelligence):
-    hit_coordinates = artificial_intelligence.determine_where_to_hit()
+    hit_coordinates = artificial_intelligence.determine_where_to_hit(artificial_intelligence.game)
     return hit_coordinates
 
 
@@ -216,8 +216,7 @@ def main():
     set_players_names(game, game_mode)
 
     difficulty_level = DifficultyLevel("hard")
-
-    artificial_intelligence = ArtificialIntelligence(difficulty_level)
+    artificial_intelligence = ArtificialIntelligence(difficulty_level, game)
 
     starting_player = randomize_players_order()
     game.players[starting_player].my_turn = True
@@ -239,8 +238,10 @@ def main():
         ask_user_for_ships(waiting_player.ocean)
     else:
         randomize_ships(waiting_player.ocean)
-
+    a=0
     while not current_player.ocean.end_game():
+        a+=1
+        print(a)
         # game main loop
 
         current_player.ocean.is_owner_looking = True
@@ -256,6 +257,7 @@ def main():
         game.switch_turn()
         waiting_player = game.get_waiting_player()
         current_player = game.get_operating_player()
+
 
     print('Congratulations!', waiting_player.name, 'won!')
 

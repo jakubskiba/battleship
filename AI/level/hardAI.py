@@ -36,9 +36,9 @@ class HardAI(AbstractAI):
             for square in row:
                 square.probability = self.calculate_probability()
 
-    def method_is_hit(self):
+    def check_is_hit(self):
         row_num, column_num = self.search_ship_algorithm()
-        if self.enemy_board[row_num][column_num] == "□":
+        if self.enemy_board[row_num][column_num].state == "□":
             self.last_target = row_num, column_num
             self.is_hit = True
             self.hunting_mode = True
@@ -46,13 +46,30 @@ class HardAI(AbstractAI):
     def ship_hunt(self):
         water = "~"
         row_num, column_num = self.last_target
-        if self.enemy_board[row_num][column_num + 1].state == water:
-            self.possible_hits.append((row_num, column_num + 1))
-        if self.enemy_board[row_num][column_num - 1].state == water:
-            self.possible_hits.append((row_num, column_num - 1))
-        if self.enemy_board[row_num + 1][column_num].state == water:
-            self.possible_hits.append((row_num + 1, column_num))
-        if self.enemy_board[row_num - 1][column_num].state == water:
-            self.possible_hits.append((row_num - 1, column_num))
-        next_hit = random.randint(0, 3)
+        try:
+            if self.enemy_board[row_num][column_num + 1].state == water:
+                self.possible_hits.append((row_num, column_num + 1))
+        except IndexError:
+            if self.enemy_board[row_num][column_num].state == water:
+                self.possible_hits.append((row_num, column_num))
+        try:
+            if self.enemy_board[row_num][column_num - 1].state == water:
+                self.possible_hits.append((row_num, column_num - 1))
+        except IndexError:
+            if self.enemy_board[row_num][column_num].state == water:
+                self.possible_hits.append((row_num, column_num))
+        try:
+            if self.enemy_board[row_num + 1][column_num].state == water:
+                self.possible_hits.append((row_num + 1, column_num))
+        except IndexError:
+            if self.enemy_board[row_num][column_num].state == water:
+                self.possible_hits.append((row_num, column_num))
+        try:
+            if self.enemy_board[row_num - 1][column_num].state == water:
+                self.possible_hits.append((row_num - 1, column_num))
+        except IndexError:
+            if self.enemy_board[row_num][column_num].state == water:
+                self.possible_hits.append((row_num, column_num))
+        next_hit = random.randint(0, len(self.possible_hits) - 1)
         self.last_target = self.possible_hits[next_hit]
+

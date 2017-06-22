@@ -16,14 +16,17 @@ class AbstractAI:
         self.taken_hits = []
         self.possible_hits = []
         self.hunting_mode = False
+        self.ship_number = 5
+        self.pattern_type = self.draw_pattern_type()
 
     def set_board(self, game):
         if game.players.get("first").name == "computer":
-            self.my_board = game.players.get("first").ocean
-            self.enemy_board = game.players.get("first").enemy_ocean
+
+            self.my_board = game.players.get("first").ocean.board
+            self.enemy_board = game.players.get("second").ocean.board
         elif game.players.get("second").name == "computer":
-            self.my_board = game.players.get("second").ocean
-            self.enemy_board = game.players.get("second").enemy_ocean
+            self.my_board = game.players.get("second").ocean.board
+            self.enemy_board = game.players.get("first").ocean.board
 
     @staticmethod
     def draw_pattern_type():
@@ -71,12 +74,22 @@ class AbstractAI:
             return False
 
     def search_ship_algorithm(self):
-        pattern_type = self.draw_pattern_type()
         while True:
             row_num, column_num = self.draw_location_to_hit()
-            if pattern_type == EVEN_PATTERN and self.check_if_square_type_is_even(row_num, column_num):
+            if self.pattern_type == EVEN_PATTERN and self.check_if_square_type_is_even(row_num, column_num):
                 return row_num, column_num
-            elif pattern_type == ODD_PATTERN and not self.check_if_square_type_is_even(row_num, column_num):
+            elif self.pattern_type == ODD_PATTERN and not self.check_if_square_type_is_even(row_num, column_num):
                 return row_num, column_num
             else:
                 continue
+
+    def toggle_hunting_mode(self, game):
+        counter = 5
+        for ship in game.players.get("first").ocean.ships:
+            if ship.is_sunk:
+                counter -= 1
+        if counter < self.ship_number:
+            self.ship_number = counter
+            self.hunting_mode = False
+        else:
+            self.hunting_mode = True
