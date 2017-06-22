@@ -48,7 +48,6 @@ class HardAI(AbstractAI):
     def ship_hunt(self):
         water = "~"
         row_num, column_num = self.last_target
-        print(self.last_target)
 
         try:
             if self.enemy_board[row_num][column_num + 1].state == water:
@@ -75,5 +74,5 @@ class HardAI(AbstractAI):
             pass
 
         next_hit = random.randint(0, len(self.possible_hits) - 1)
-        self.last_target = self.possible_hits[next_hit]
+        return self.possible_hits[next_hit]
 

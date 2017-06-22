@@ -21,7 +21,6 @@ class AbstractAI:
 
     def set_board(self, game):
         if game.players.get("first").name == "computer":
-
             self.my_board = game.players.get("first").ocean.board
             self.enemy_board = game.players.get("second").ocean.board
         elif game.players.get("second").name == "computer":

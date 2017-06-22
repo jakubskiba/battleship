@@ -39,9 +39,9 @@ class ArtificialIntelligence:
         elif self.level == HARD:
             self.mode.check_is_hit()
             if self.mode.hunting_mode:
-                self.mode.ship_hunt()
+                hit_coordinates = self.mode.ship_hunt()
                 self.mode.toggle_hunting_mode(game)
-                hit_coordinates = self.mode.search_ship_algorithm()
+                print(self.mode.hunting_mode)
             else:
                 hit_coordinates = self.mode.search_ship_algorithm()
         else:
