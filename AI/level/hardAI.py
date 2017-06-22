@@ -1,5 +1,3 @@
-import random
-
 from AI.level.abstractAI import AbstractAI
 
 ODD_PATTERN = 1
@@ -7,8 +5,8 @@ EVEN_PATTERN = 2
 
 
 class HardAI(AbstractAI):
-    def __init__(self, game, taken_hits, last_hit):
-        super().__init__(game, taken_hits, last_hit)
+    def __init__(self, game):
+        super().__init__(game)
 
     def calculate_probability(self):
         hittable_squares = 0
@@ -28,4 +26,8 @@ class HardAI(AbstractAI):
                 square.probability = self.calculate_probability()
 
     def is_hit(self):
-        pass
+        row_num, column_num = self.search_ship_algorithm()
+        if self.enemy_board[row_num][column_num] == "□":
+            self.last_target = row_num, column_num
+            self.is_hit = True
+

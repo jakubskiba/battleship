@@ -11,7 +11,8 @@ class AbstractAI:
         self.my_board = None
         self.enemy_board = None
         self.set_board(game)        # Setter for current player boards.
-        self.last_hit = None
+        self.last_target = None
+        self.is_hit = False
         self.taken_hits = []
 
     def set_board(self, game):
