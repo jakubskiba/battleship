@@ -12,16 +12,16 @@ class HardAI(AbstractAI):
         self.last_hit = last_hit
 
     def calculate_probability(self):
-        hitable_squares = 0
+        hittable_squares = 0
         ship_squares = 0
         for row in self.enemy_board:
             for square in row:
                 if square.state == "~":
-                    hitable_squares += 1
+                    hittable_squares += 1
                 elif square.state == "□": # sprawdzić czy kwadrat jest statkiem
                     ship_squares += 1
 
-        return ship_squares/hitable_squares
+        return ship_squares/hittable_squares
 
     def set_square_probability(self):
         for row in self.enemy_board:
