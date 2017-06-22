@@ -12,6 +12,7 @@ class Player:
     def __init__(self, name='computer'):
         self.name = name
         self.ocean = Ocean()
+        self.enemy_ocean = Ocean()
         self.my_turn = False
 
     @property
