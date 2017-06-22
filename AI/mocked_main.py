@@ -5,7 +5,6 @@ from game import Game
 
 def main():
     difficulty_level = DifficultyLevel("hard")
-    difficulty_level.set_level("hard")
     game = Game()
 
     AI = ArtificialIntelligence(difficulty_level, game)
