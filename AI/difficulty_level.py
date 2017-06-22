@@ -1,3 +1,8 @@
+from AI.enum.enum import EASY as EASY
+from AI.enum.enum import EASY as NORMAL
+from AI.enum.enum import EASY as HARD
+
+
 class DifficultyLevel:
     def __init__(self, name=''):
         self.name = name
@@ -6,8 +11,8 @@ class DifficultyLevel:
 
     def set_level(self, name):
         if name == "easy":
-            self.level = 1
+            self.level = EASY
         elif name == "normal":
-            self.level = 2
+            self.level = NORMAL
         elif name == "hard":
-            self.level = 3
+            self.level = HARD

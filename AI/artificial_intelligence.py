@@ -1,16 +1,21 @@
 from AI.level.easyAI import EasyAI
 from AI.level.normalAI import NormalAI
 
+from AI.enum.enum import EASY as EASY
+from AI.enum.enum import EASY as NORMAL
+from AI.enum.enum import EASY as HARD
+
+POSITION_Y = 0
+POSITION_X = 1
+
 
 class ArtificialIntelligence:
 
     def __init__(self, difficulty_level):
-        position_y = 0
-        position_x = 1
 
         self.level = difficulty_level.level
-        self.coordY = self.determine_where_to_hit()[position_y]
-        self.coordX = self.determine_where_to_hit()[position_x]
+        self.coordY = self.determine_where_to_hit()[POSITION_Y]
+        self.coordX = self.determine_where_to_hit()[POSITION_X]
 
     def determine_where_to_hit(self):
         """
@@ -21,11 +26,11 @@ class ArtificialIntelligence:
         """
         hit_coordinates = None
 
-        if self.level == 1:
+        if self.level == EASY:
             hit_coordinates = EasyAI().draw_location_to_hit()
-        elif self.level == 2:
+        elif self.level == NORMAL:
             hit_coordinates = NormalAI().draw_location_to_hit()
-        elif self.level == 3:
+        elif self.level == HARD:
             pass
             # hardAI.xxx()
         else:
