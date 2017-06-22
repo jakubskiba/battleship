@@ -26,7 +26,7 @@ class HardAI(AbstractAI):
             for square in row:
                 if square.state == "~":
                     hittable_squares += 1
-                elif square.state == "□": # sprawdzić czy kwadrat jest statkiem
+                elif square.state == "□":
                     ship_squares += 1
 
         return ship_squares/hittable_squares
@@ -56,8 +56,3 @@ class HardAI(AbstractAI):
             self.possible_hits.append((row_num - 1, column_num))
         next_hit = random.randint(0, 3)
         self.last_target = self.possible_hits[next_hit]
-
-
-
-
-
