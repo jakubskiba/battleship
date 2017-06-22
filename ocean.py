@@ -1,5 +1,5 @@
-from square import *
-from ship import *
+from square import Square
+from ship import Ship
 from copy import deepcopy
 
 
@@ -88,13 +88,11 @@ class Ocean:
         """
 
         for ship_square in ship.squares:
-            # czy nie wystaje
             try:
                 board_square = self.board[ship_square.row - 1][ship_square.column - 1]
             except IndexError:
                 return False
 
-            # czy otoczenie jest puste
             if self.__check_square_availability(board_square.row, board_square.column):
                 continue
             else:
@@ -115,15 +113,12 @@ class Ocean:
         ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
         print(self)
         for ship_name in ships_names:
-            # tworzenie nowego shipa
             new_ship = self.__generate_single_ship(ship_name)
 
-            # sprawdzanie możliwości wstawienia
             while not self.__check_possibility_of_ship_placement(new_ship):
                 print('wrong coordinates provided')
                 new_ship = self.__generate_single_ship(ship_name)
 
-            # wstawianie go
             self.ships.append(new_ship)
             self.place_ship_on_board(new_ship)
             print(self)
