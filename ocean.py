@@ -36,35 +36,6 @@ class Ocean:
                 column_list.append(new_square)
             self.board.append(column_list)
 
-    def __generate_single_ship(self, ships_name):
-        """
-        Asks user for data
-            Ship (obj)
-        """
-
-        accepted_rows = [str(i) for i in range(1, 11)]
-        accepted_columns = [chr(i) for i in range(65, 75)]
-
-        row = ''
-        while row not in accepted_rows:
-            row = input('Provide row for ' + ships_name + '[1 - 10]: ')
-        row = int(row)
-
-        column = ''
-        while column not in accepted_columns:
-            column = input('Provide column for ' + ships_name + '[A - J]: ').upper()
-        column = ord(column) - 64
-
-        is_vertical = input('Is ship vertical? (y or n)')
-        while is_vertical != 'y' and is_vertical != 'n':
-            is_vertical = input('Is ship vertical? (y or n)')
-        if is_vertical == 'y':
-            is_vertical = True
-        else:
-            is_vertical = False
-
-        return Ship(row, column, ships_name, is_vertical)
-
     def __check_square_availability(self, row, column):
         """
             Checks if it is possible to place square in specified coordinates
@@ -79,7 +50,7 @@ class Ocean:
                     continue
         return True
 
-    def __check_possibility_of_ship_placement(self, ship):
+    def check_possibility_of_ship_placement(self, ship):
         """
             Simulates placement of each square of ship, if succeed makes real replacement
 
@@ -102,26 +73,6 @@ class Ocean:
     def place_ship_on_board(self, new_ship):
         for i in range(len(new_ship.squares)):
             self.board[new_ship.squares[i].row - 1][new_ship.squares[i].column - 1] = new_ship.squares[i]
-
-    def generate_ships(self):
-        """
-        Generates ships list, check correctness of ship placement and replace squares in board list
-
-        Returns:
-            None
-        """
-        ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
-        print(self)
-        for ship_name in ships_names:
-            new_ship = self.__generate_single_ship(ship_name)
-
-            while not self.__check_possibility_of_ship_placement(new_ship):
-                print('wrong coordinates provided')
-                new_ship = self.__generate_single_ship(ship_name)
-
-            self.ships.append(new_ship)
-            self.place_ship_on_board(new_ship)
-            print(self)
 
     def end_game(self):
         """

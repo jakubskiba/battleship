@@ -1,4 +1,5 @@
 from game import Game
+from ship import Ship
 from random import randint
 
 
@@ -66,12 +67,95 @@ def get_shot_coordinates_from_AI():
 
 
 def get_coordinates(game):
+    """
+
+    """
     if game.get_operating_player().is_human:
         row, column = get_shot_coordinates_from_user()
     else:
         row, column = get_shot_coordinates_from_AI()
 
     return row, column
+
+
+def ask_user_for_row(ship_name):
+    """
+    Asks user for row until provided data aren't correct
+
+    Returns:
+        row(int)
+    """
+
+    accepted_rows = [str(i) for i in range(1, 11)]
+
+    row = ''
+    while row not in accepted_rows:
+        row = input('Provide row for ' + ship_name + '[1 - 10]: ')
+    return int(row)
+
+
+def ask_user_for_column(ship_name):
+    """
+    Asks user for row until provided data aren't correct
+
+    Returns:
+        column(int)
+    """
+
+    accepted_columns = [chr(i) for i in range(65, 75)]
+
+    column = ''
+    while column not in accepted_columns:
+        column = input('Provide column for ' + ship_name + '[A - J]: ').upper()
+    return ord(column) - 64
+
+
+def ask_user_is_ship_vertical():
+    """
+    Ask user for ship orientation
+
+    Returns:
+        bool
+    """
+
+    is_vertical = input('Is ship vertical? (y or n)')
+    while is_vertical != 'y' and is_vertical != 'n':
+        is_vertical = input('Is ship vertical? (y or n)')
+    if is_vertical == 'y':
+        is_vertical = True
+    else:
+        is_vertical = False
+
+    return is_vertical
+
+
+def generate_single_ship(ship_name):
+    """
+    Asks user for data
+
+    Returns
+        Ship (obj)
+
+    """
+
+    row = ask_user_for_row(ship_name)
+    column = ask_user_for_column(ship_name)
+
+    is_vertical = ask_user_is_ship_vertical()
+
+    return Ship(row, column, ship_name, is_vertical)
+
+
+def generate_ships(ocean):
+    ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
+    print(ocean)
+    for ship_name in ships_names:
+        new_ship = generate_single_ship(ship_name)
+        while not ocean.check_possibility_of_ship_placement(new_ship):
+            new_ship = generate_single_ship(ship_name)
+        ocean.ships.append(new_ship)
+        ocean.place_ship_on_board(new_ship)
+        print(ocean)
 
 
 def main():
@@ -90,11 +174,11 @@ def main():
     # placing ships
     current_player.ocean.is_owner_looking = True
     print(current_player.name, 'set your ships!')
-    current_player.ocean.generate_ships()
+    generate_ships(current_player.ocean)
 
     waiting_player.ocean.is_owner_looking = True
     print(waiting_player.name, 'set your ships!')
-    waiting_player.ocean.generate_ships()
+    generate_ships(current_player.ocean)
 
     while not current_player.ocean.end_game():
         print('TEST')
