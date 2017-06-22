@@ -1,13 +1,15 @@
 from AI.artificial_intelligence import ArtificialIntelligence
 from AI.difficulty_level import DifficultyLevel
+from game import Game
 
 
 def main():
-    difficulty_level = DifficultyLevel()
-    difficulty_level.set_level("normal")
+    difficulty_level = DifficultyLevel("hard")
+    difficulty_level.set_level("hard")
+    game = Game()
 
-    artificial_intelligence = ArtificialIntelligence(difficulty_level)
-    print(artificial_intelligence.__dict__)
+
+    AI = ArtificialIntelligence(difficulty_level, game)
 
 if __name__ == "__main__":
     main()

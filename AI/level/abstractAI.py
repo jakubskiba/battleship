@@ -14,15 +14,15 @@ class AbstractAI:
         self.last_target = None
         self.is_hit = False
         self.taken_hits = []
+        self.possible_hits = []
+        self.hunting_mode = False
 
     def set_board(self, game):
         if game.players.get("first").name == "computer":
             self.my_board = game.players.get("first").ocean
-            print(self.my_board, "first")
             self.enemy_board = game.players.get("first").enemy_ocean
         elif game.players.get("second").name == "computer":
             self.my_board = game.players.get("second").ocean
-            print(self.my_board, "second")
             self.enemy_board = game.players.get("second").enemy_ocean
 
     @staticmethod

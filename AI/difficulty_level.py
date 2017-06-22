@@ -1,6 +1,6 @@
 from AI.enum.enum import EASY as EASY
-from AI.enum.enum import EASY as NORMAL
-from AI.enum.enum import EASY as HARD
+from AI.enum.enum import NORMAL as NORMAL
+from AI.enum.enum import HARD as HARD
 
 
 class DifficultyLevel:
