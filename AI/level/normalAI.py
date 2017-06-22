@@ -35,8 +35,8 @@ class NormalAI(AbstractAI):
         """
         Generate which coordinates should be typed as a candidate to hit by algorithm.
         """
-        row_num = random.randint(0, len(self.ocean.board[0]) - 1)
-        column_num = random.randint(0, len(self.ocean.board[0]) - 1)
+        row_num = random.randint(0, len(self.enemy_board[0]) - 1)
+        column_num = random.randint(0, len(self.enemy_board[0]) - 1)
         return row_num, column_num
 
     @staticmethod
