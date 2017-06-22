@@ -42,15 +42,18 @@ class Ocean:
             Ship (obj)
         """
 
+        accepted_rows = [str(i) for i in range(1, 11)]
+        accepted_columns = [chr(i) for i in range(65, 75)]
+
         row = ''
-        while not (row.isdigit() and int(row) >= 1 and int(row) <= 10):
-            row = input('Provide row for ' + ships_name + ':')
+        while row not in accepted_rows:
+            row = input('Provide row for ' + ships_name + '[1 - 10]: ')
         row = int(row)
 
         column = ''
-        while not (column.isdigit() and int(column) >= 1 and int(column) <= 10):
-            column = input('Provide column for ' + ships_name + ':')
-        column = int(column)
+        while column not in accepted_columns:
+            column = input('Provide column for ' + ships_name + '[A - J]: ').upper()
+        column = ord(column) - 64
 
         is_vertical = input('Is ship vertical? (y or n)')
         while is_vertical != 'y' and is_vertical != 'n':
@@ -105,13 +108,14 @@ class Ocean:
             None
         """
         ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
+        print(self)
         for ship_name in ships_names:
-            print(self)
             ship_placed = False
             while not ship_placed:
                 new_ship = self.__generate_single_ship(ship_name)
                 ship_placed = self.__replace_squares(new_ship)
             self.ships.append(new_ship)
+            print(self)
 
     def end_game(self):
         """
@@ -126,13 +130,15 @@ class Ocean:
         return True
 
     def __str__(self):
-        board = ''
+        column_indexes = [chr(i) for i in range(65, 75)]
+        first_row = ' '.join(column_indexes) + '\n'
+        board = first_row
         for row in range(10):
             for column in range(10):
                 current_square = str(self.board[row][column])
-                if current_square == 'o' and not self.is_owner_looking:
-                    board += '~'
+                if current_square == '□' and not self.is_owner_looking:
+                    board += '~ '
                 else:
                     board += current_square + ' '
-            board += '\n'
+            board += str(row + 1) + '\n'
         return board

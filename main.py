@@ -87,18 +87,25 @@ def main():
     waiting_player = game.get_waiting_player()
     current_player = game.get_operating_player()
 
-    # wstawianie statków
+    # placing ships
+    current_player.ocean.is_owner_looking = True
+    print(current_player.name, 'set your ships!')
     current_player.ocean.generate_ships()
+
+    waiting_player.ocean.is_owner_looking = True
+    print(waiting_player.name, 'set your ships!')
     waiting_player.ocean.generate_ships()
 
-    while not waiting_player.ocean.end_game():
-        # tu dzieje się gra / chyba gotowe
-
+    while not current_player.ocean.end_game():
+        # game main loop
+        current_player.ocean.is_owner_looking = True
+        waiting_player.ocean.is_owner_looking = False
+        print(game)
         row, column = get_coordinates(game)
-        while not current_player.ocean.board[row][column].can_be_hit():
+        while not waiting_player.ocean.board[row][column].can_be_hit():
             row, column = get_coordinates(game)
 
-        current_player.ocean.board[row][column].hit()
+        waiting_player.ocean.board[row][column].hit()
 
         game.switch_turn()
         waiting_player = game.get_waiting_player()

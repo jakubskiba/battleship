@@ -20,14 +20,6 @@ class Player:
         if self.name == 'computer':
             return False
         else:
-            self.is_human = True
-        self.my_turn = False
-
-    @property
-    def is_human(self):
-        if self.name == 'computer':
-            return False
-        else:
             return True
 
     def __str__(self):
@@ -40,5 +32,3 @@ class Player:
         else:
             is_human = '(C)'
         return 'name: ' + self.name + is_human
-
-    
