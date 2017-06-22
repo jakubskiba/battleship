@@ -1,3 +1,5 @@
+import time
+
 from AI.level.abstractAI import AbstractAI
 import random
 
@@ -46,30 +48,32 @@ class HardAI(AbstractAI):
     def ship_hunt(self):
         water = "~"
         row_num, column_num = self.last_target
+        print(self.last_target)
+
         try:
             if self.enemy_board[row_num][column_num + 1].state == water:
                 self.possible_hits.append((row_num, column_num + 1))
         except IndexError:
-            if self.enemy_board[row_num][column_num].state == water:
-                self.possible_hits.append((row_num, column_num))
+            pass
+
         try:
             if self.enemy_board[row_num][column_num - 1].state == water:
                 self.possible_hits.append((row_num, column_num - 1))
         except IndexError:
-            if self.enemy_board[row_num][column_num].state == water:
-                self.possible_hits.append((row_num, column_num))
+            pass
+
         try:
             if self.enemy_board[row_num + 1][column_num].state == water:
                 self.possible_hits.append((row_num + 1, column_num))
         except IndexError:
-            if self.enemy_board[row_num][column_num].state == water:
-                self.possible_hits.append((row_num, column_num))
+            pass
+
         try:
             if self.enemy_board[row_num - 1][column_num].state == water:
                 self.possible_hits.append((row_num - 1, column_num))
         except IndexError:
-            if self.enemy_board[row_num][column_num].state == water:
-                self.possible_hits.append((row_num, column_num))
+            pass
+
         next_hit = random.randint(0, len(self.possible_hits) - 1)
         self.last_target = self.possible_hits[next_hit]
 
