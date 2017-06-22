@@ -11,8 +11,8 @@ class Player:
 
     def __init__(self, name='computer'):
         self.name = name
-        self.ocean = Ocean()
-        self.enemy_ocean = Ocean()
+        self.ocean = Ocean().board
+        self.enemy_ocean = Ocean().board
         self.my_turn = False
 
     @property

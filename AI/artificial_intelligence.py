@@ -1,21 +1,28 @@
 from AI.level.easyAI import EasyAI
 from AI.level.normalAI import NormalAI
+from AI.level.hardAI import HardAI
 
 from AI.enum.enum import EASY as EASY
 from AI.enum.enum import NORMAL as NORMAL
 from AI.enum.enum import HARD as HARD
 
-POSITION_Y = 0
-POSITION_X = 1
-
 
 class ArtificialIntelligence:
 
-    def __init__(self, difficulty_level):
-
+    def __init__(self, difficulty_level, game):
         self.level = difficulty_level.level
-        self.coordY = self.determine_where_to_hit()[POSITION_Y]
-        self.coordX = self.determine_where_to_hit()[POSITION_X]
+        self.game = game
+        self.mode = None
+        self.set_mode()
+        self.coordY, self.coordX = self.determine_where_to_hit()
+
+    def set_mode(self):
+        if self.level == EASY:
+            self.mode = EasyAI(self.game)
+        elif self.level == NORMAL:
+            self.mode = NormalAI(self.game)
+        elif self.level == HARD:
+            self.mode = HardAI(self.game)
 
     def determine_where_to_hit(self):
         """determine_where_to_hit
@@ -25,15 +32,17 @@ class ArtificialIntelligence:
             tuple of coordinates (y, x)
         """
         hit_coordinates = None
-
         if self.level == EASY:
-            hit_coordinates = EasyAI().draw_location_to_hit()
+            hit_coordinates = self.mode.draw_location_to_hit()
         elif self.level == NORMAL:
-            hit_coordinates = NormalAI().draw_location_to_hit()
+            hit_coordinates = self.mode.draw_location_to_hit()
         elif self.level == HARD:
-            pass
-            # hardAI.xxx()
+            self.mode.method_is_hit()
+            if self.mode.hunting_mode:
+                self.mode.ship_hunt()
+                hit_coordinates = self.mode.draw_location_to_hit()
+            else:
+                hit_coordinates = self.mode.draw_location_to_hit()
         else:
             raise ValueError("Invalid difficulty level")
-
         return hit_coordinates
