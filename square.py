@@ -12,6 +12,7 @@ class Square:
         self.row = row
         self.column = column
         self.state = '~'
+        self.probability = None
 
     def __str__(self):
         return self.state
