@@ -1,5 +1,5 @@
-from square import *
-from ship import *
+from square import Square
+from ship import Ship
 from copy import deepcopy
 
 
@@ -8,7 +8,9 @@ class Ocean:
     Object represents whole game board for one player
 
     Attributes:
-        ships(list): list of ships
+        ships(dict): dictionary of ships
+            key(str): ship name
+            value(obj): object of class Ship
         board(list): list of every square of the board
         is_owner_looking(bool): affects on the text representation of the board
     """
@@ -17,6 +19,7 @@ class Ocean:
         self.ships = []
         self.board = []
         self.is_owner_looking = False
+        self.generate_board()
 
     def generate_board(self):
         """
@@ -33,39 +36,13 @@ class Ocean:
                 column_list.append(new_square)
             self.board.append(column_list)
 
-    def __generate_single_ship(self, ships_name):
-        """
-        Asks user for data
-            Ship (obj)
-        """
-
-        row = ''
-        while not (row.isdigit() and int(row) >= 1 and int(row) <= 10):
-            row = input('Provide row for ' + ships_name + ':')
-        row = int(row)
-
-        column = ''
-        while not (column.isdigit() and int(column) >= 1 and int(column) <= 10):
-            column = input('Provide column for ' + ships_name + ':')
-        column = int(column)
-
-        is_vertical = input('Is ship vertical? (y or n)')
-        while is_vertical != 'y' and is_vertical != 'n':
-            is_vertical = input('Is ship vertical? (y or n)')
-        if is_vertical == 'y':
-            is_vertical = True
-        else:
-            is_vertical = False
-
-        return Ship(row, column, ships_name, is_vertical)
-
     def __check_square_availability(self, row, column):
         """
-            Checks if it is possible to place square in specified coordinates
+        Checks if it is possible to place square in specified coordinates
         """
 
-        for y in range(-1, 1):
-            for x in range(-1, 1):
+        for y in range(-1, 2):
+            for x in range(-1, 2):
                 try:
                     if str(self.board[row + y - 1][column + x - 1]) != '~':
                         return False
@@ -73,47 +50,41 @@ class Ocean:
                     continue
         return True
 
-    def __replace_squares(self, ship):
+    def check_possibility_of_ship_placement(self, ship):
         """
-            Simulates placement of each square of ship, if succeed makes real replacement
-
-            Returns:
-                (bool)
-        """
-
-        board = deepcopy(self.board)
-        for ship_square in ship.squares:
-            try:
-                board_square = board[ship_square.row - 1][ship_square.column - 1]
-            except IndexError:
-                return False
-            if self.__check_square_availability(board_square.row, board_square.column):
-                board[ship_square.row - 1][ship_square.column - 1] = ship_square
-            else:
-                return False
-        self.board = board
-        return True
-
-    def generate_ships(self):
-        """
-        Generates ships list, check correctness of ship placement and replace squares in board list
+        Simulates placement of each square of ship, if succeed makes real replacement
 
         Returns:
-            None
+            (bool)
         """
-        ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
-        for ship_name in ships_names:
-            ship_placed = False
-            while not ship_placed:
-                new_ship = self.__generate_single_ship(ship_name)
-                ship_placed = self.__replace_squares(new_ship)
-            self.ships.append(new_ship)
+
+        for ship_square in ship.squares:
+            try:
+                board_square = self.board[ship_square.row - 1][ship_square.column - 1]
+            except IndexError:
+                return False
+
+            if self.__check_square_availability(board_square.row, board_square.column):
+                continue
+            else:
+                return False
+        return True
+
+    def place_ship_on_board(self, new_ship):
+        """
+        Places provided ship on board
+        """
+
+        for i in range(len(new_ship.squares)):
+            row = new_ship.squares[i].row - 1
+            column = new_ship.squares[i].column - 1
+            self.board[row][column] = new_ship.squares[i]
 
     def end_game(self):
         """
-            Checks that each ship is sunk
-            Returns:
-                (bool)
+        Checks that each ship is sunk
+        Returns:
+            (bool)
         """
 
         for ship in self.ships:
@@ -122,13 +93,15 @@ class Ocean:
         return True
 
     def __str__(self):
-        board = ''
+        column_indexes = [chr(i) for i in range(65, 75)]
+        first_row = ' '.join(column_indexes) + '\n'
+        board = first_row
         for row in range(10):
             for column in range(10):
                 current_square = str(self.board[row][column])
-                if current_square == 'o' and not self.is_owner_looking:
-                    board += '~'
+                if current_square == '□' and not self.is_owner_looking:
+                    board += '~ '
                 else:
                     board += current_square + ' '
-            board += '\n'
+            board += str(row + 1) + '\n'
         return board

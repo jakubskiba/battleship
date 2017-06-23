@@ -37,3 +37,11 @@ __Methods__
 * change_state(self, state)
   - Returns None
   - Change state attribute to given value
+
+* can_be_hit(self)
+  - Returns bool
+  - Checks isn't square already hit
+
+* hit(self)
+  - Returns string
+  - Changes states from unhit to hit

@@ -12,28 +12,13 @@ class Square:
         self.row = row
         self.column = column
         self.state = '~'
+        self.probability = None
 
     def __str__(self):
         return self.state
 
     def __repr__(self):
         return self.state
-
-    def __is_change_possible(self, state):
-        """
-        Checks correctness of changes
-        """
-
-        if self.state == '~' and state == ' ':
-            return True
-
-        elif self.state == '~' and state == 'o':
-            return True
-
-        elif self.state == 'o' and state == 'x':
-            return True
-        else:
-            return False
 
     def change_state(self, state):
         """
@@ -42,12 +27,30 @@ class Square:
         Args:
             state (str): new state
         """
-        if self.__is_change_possible(state):
-            self.state = state
 
-        '''
-        # proposed feature
+        self.state = state
+
+    def hit(self):
+        """
+        Returns
+            message(str)
+        """
+        possible_changes = {'~': 'O', '□': 'X'}
+        hit_messages = {'~': 'Miss!', '□': 'Hit!'}
+
+        message = hit_messages[self.state]
+        self.state = possible_changes[self.state]
+        return message
+
+    def can_be_hit(self):
+        """
+        Checks isn't square already hit
+
+        Returns:
+            bool
+        """
+
+        if self.state in ['~', '□']:
             return True
         else:
             return False
-        '''
