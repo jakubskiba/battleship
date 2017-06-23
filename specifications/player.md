@@ -31,3 +31,7 @@ __Methods__
 * __str__(self)
   - Returns string
   - Name
+  
+* count_unhited_quares(self)
+  - Returns int
+  - Count number of unhit squares
