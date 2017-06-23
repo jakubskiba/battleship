@@ -9,12 +9,14 @@ from AI.difficulty_level import DifficultyLevel
 
 def choose_game_mode():
     possible_modes = {'1': 'PvP', '2': 'PvC', '3': 'CvC'}
+
     menu = '''
     1. PvP
     2. PvC
     3. CvC
     '''
     print(menu)
+
     game_mode = ''
     while game_mode not in possible_modes:
         game_mode = input('Choose game mode: ')
@@ -23,12 +25,14 @@ def choose_game_mode():
 
 def choose_ai_level():
     possible_ai = {'1': 'easy', '2': 'normal', '3': 'hard'}
+
     menu = '''
     1. easy
     2. normal
     3. hard
     '''
     print(menu)
+
     ai_level = ''
     while ai_level not in possible_ai:
         ai_level = input('Choose AI level: ')
@@ -50,6 +54,10 @@ def set_players_names(game, game_mode):
 
 
 def randomize_players_order():
+    """
+    Returns:
+        (str)
+    """
     which_player = randint(1, 2)
     if which_player == 1:
         return 'first'
@@ -58,6 +66,15 @@ def randomize_players_order():
 
 
 def get_shot_coordinates_from_user():
+    """
+    Ask user for shot coordinates
+
+    Returns:
+        coordinates(tuple)
+            row(int): 0-9
+            column(int): 0-9
+    """
+
     accepted_rows = [str(i) for i in range(1, 11)]
     accepted_columns = [chr(i) for i in range(65, 75)]
 
@@ -76,20 +93,20 @@ def get_shot_coordinates_from_user():
     return row, column
 
 
-def get_shot_coordinates_from_AI(artificial_intelligence):
-    hit_coordinates = artificial_intelligence.determine_where_to_hit()
-    return hit_coordinates
-
-
 def get_coordinates(game, artificial_intelligence):
     """
     Switches shot coordinates input
+
+    Returns:
+        coordinates(tuple)
+            row(int): 0-9
+            column(int): 0-9
     """
 
     if game.get_operating_player().is_human:
         row, column = get_shot_coordinates_from_user()
     else:
-        row, column = get_shot_coordinates_from_AI(artificial_intelligence)
+        row, column = artificial_intelligence.determine_where_to_hit()
 
     return row, column
 
@@ -155,7 +172,7 @@ def ask_user_is_ship_vertical():
 
 def generate_single_ship(ship_name):
     """
-    Asks user for data
+    Asks user for ships details
 
     Returns
         Ship (obj)
@@ -172,8 +189,12 @@ def generate_single_ship(ship_name):
 
 def ask_user_for_ships(ocean):
     """
+    Creates ships from user input
 
+    Args:
+        ocean(obj): Ocean object
     """
+
     ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
     print(ocean)
     for ship_name in ships_names:
@@ -187,7 +208,7 @@ def ask_user_for_ships(ocean):
 
 def randomize_single_ship(ship_name):
     """
-
+    Creates random ship
     """
 
     row = randint(1, 10)
@@ -394,7 +415,9 @@ def main():
         current_player = game.get_operating_player()
 
     print('Congratulations!', waiting_player.name, 'won!')
+    input('Press any key')
     update_highscore(waiting_player, current_player)
+    print_highscore()
 
 
 if __name__ == '__main__':
