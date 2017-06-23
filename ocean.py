@@ -76,7 +76,9 @@ class Ocean:
         """
 
         for i in range(len(new_ship.squares)):
-            self.board[new_ship.squares[i].row - 1][new_ship.squares[i].column - 1] = new_ship.squares[i]
+            row = new_ship.squares[i].row - 1
+            column = new_ship.squares[i].column - 1
+            self.board[row][column] = new_ship.squares[i]
 
     def end_game(self):
         """
