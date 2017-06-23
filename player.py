@@ -22,6 +22,23 @@ class Player:
         else:
             return True
 
+    def count_unhited_squares(self):
+        """
+        Counts number of unhit squares
+
+        Returns:
+            int
+        """
+
+        amount = 0
+
+        for ship in self.ocean.ships:
+            for square in ship.squares:
+                if square.state == '□':
+                    amount += 1
+
+        return amount
+
     def __str__(self):
         """
         Returns:

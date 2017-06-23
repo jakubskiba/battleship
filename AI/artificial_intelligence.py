@@ -31,7 +31,7 @@ class ArtificialIntelligence:
         :returns
             tuple of coordinates (y, x)
         """
-        hit_coordinates = None
+        hit_coordinates = (1, 1)
         if self.level == EASY:
             hit_coordinates = self.mode.draw_location_to_hit()
         elif self.level == NORMAL:
@@ -45,5 +45,4 @@ class ArtificialIntelligence:
                 hit_coordinates = self.mode.search_ship_algorithm()
         else:
             raise ValueError("Invalid difficulty level")
-
         return hit_coordinates

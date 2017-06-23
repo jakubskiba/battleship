@@ -32,8 +32,9 @@ class Square:
 
     def hit(self):
         """
+        Returns
+            message(str)
         """
-
         possible_changes = {'~': 'O', '□': 'X'}
         hit_messages = {'~': 'Miss!', '□': 'Hit!'}
 
@@ -42,6 +43,13 @@ class Square:
         return message
 
     def can_be_hit(self):
+        """
+        Checks isn't square already hit
+
+        Returns:
+            bool
+        """
+
         if self.state in ['~', '□']:
             return True
         else:
