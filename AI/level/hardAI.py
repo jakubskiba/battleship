@@ -1,5 +1,3 @@
-import time
-
 from AI.level.abstractAI import AbstractAI
 import random
 
@@ -74,5 +72,5 @@ class HardAI(AbstractAI):
             pass
 
         next_hit = random.randint(0, len(self.possible_hits) - 1)
-        return self.possible_hits[next_hit]
 
+        return self.possible_hits[next_hit]
