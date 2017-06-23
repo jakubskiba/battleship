@@ -38,7 +38,7 @@ class Ocean:
 
     def __check_square_availability(self, row, column):
         """
-            Checks if it is possible to place square in specified coordinates
+        Checks if it is possible to place square in specified coordinates
         """
 
         for y in range(-1, 2):
@@ -52,10 +52,10 @@ class Ocean:
 
     def check_possibility_of_ship_placement(self, ship):
         """
-            Simulates placement of each square of ship, if succeed makes real replacement
+        Simulates placement of each square of ship, if succeed makes real replacement
 
-            Returns:
-                (bool)
+        Returns:
+            (bool)
         """
 
         for ship_square in ship.squares:
@@ -71,14 +71,18 @@ class Ocean:
         return True
 
     def place_ship_on_board(self, new_ship):
+        """
+        Places provided ship on board
+        """
+
         for i in range(len(new_ship.squares)):
             self.board[new_ship.squares[i].row - 1][new_ship.squares[i].column - 1] = new_ship.squares[i]
 
     def end_game(self):
         """
-            Checks that each ship is sunk
-            Returns:
-                (bool)
+        Checks that each ship is sunk
+        Returns:
+            (bool)
         """
 
         for ship in self.ships:
