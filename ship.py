@@ -2,6 +2,20 @@ from square import Square
 
 
 class Ship:
+    """
+    Object represents single ship
+
+    Attributes:
+        name(str)
+        start_row(int)
+        start_column(int)
+        length(int)
+        squares(list)
+        is_vertical(bool)
+        is_hit(bool)
+        is_sunk(bool)
+    """
+
     def __init__(self, start_row, start_column, name, is_vertical):
         """
         Method creates an instance of the class
@@ -70,21 +84,3 @@ class Ship:
         str_ship = [square.state for square in self.squares]
         str_ship = ''.join(str_ship)
         return str_ship
-
-
-def main():
-    ship = Ship(3, 5, 'Carrier', True)
-    print(ship)
-    ship.squares[-3].change_state('x')
-    print(ship)
-    print(ship.is_hit)
-    print(ship.is_sunk)
-    for i in range(5):
-        ship.squares[i].change_state('X')
-    print(ship)
-    print(ship.is_hit)
-    print(ship.is_sunk)
-
-
-if __name__ == '__main__':
-    main()
