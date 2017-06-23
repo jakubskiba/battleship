@@ -347,11 +347,29 @@ def placing_ships(current_player, waiting_player):
         randomize_ships(waiting_player.ocean)
 
 
-def main():
-    print_highscore()
+def print_turn_separator(current_player, waiting_player, game_mode):
+    """
+    Prints Press any key message
 
-    intro('additional_files/intro_art.txt')
+    Returns:
+        None
+    """
 
+    if current_player.is_human and waiting_player.is_human:
+        input('Press ENTER to continue')
+        os.system('clear')
+        intro('additional_files/cutscene.txt')
+        print('Press ENTER to continue ' + waiting_player.name)
+        input()
+    if current_player.is_human and not waiting_player.is_human:
+        input('Press ENTER to continue')
+
+    if game_mode == 'CvC':
+        time.sleep(0.1)
+        os.system('clear')
+
+
+def setup_game():
     game_mode = choose_game_mode()
 
     ai_level = 'easy'
@@ -377,6 +395,15 @@ def main():
     # placing ships
     placing_ships(current_player, waiting_player)
 
+    return game, current_player, waiting_player, artificial_intelligence, game_mode
+
+
+def main():
+    print_highscore()
+    intro('additional_files/intro_art.txt')
+
+    game, current_player, waiting_player, artificial_intelligence, game_mode = setup_game()
+
     while not current_player.ocean.end_game():
         # game main loop
 
@@ -397,18 +424,7 @@ def main():
 
         set_and_print_hit_info(message, waiting_player, row, column)
 
-        if current_player.is_human and waiting_player.is_human:
-            input('Press ENTER to continue')
-            os.system('clear')
-            intro('additional_files/cutscene.txt')
-            print('Press ENTER to continue ' + waiting_player.name)
-            input()
-        if current_player.is_human and not waiting_player.is_human:
-            input('Press ENTER to continue')
-
-        if game_mode == 'CvC':
-            time.sleep(0.1)
-            os.system('clear')
+        print_turn_separator(current_player, waiting_player, game_mode)
 
         game.switch_turn()
         waiting_player = game.get_waiting_player()
