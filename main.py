@@ -8,6 +8,12 @@ from AI.difficulty_level import DifficultyLevel
 
 
 def choose_game_mode():
+    """Function asks user about game mode and returns it
+
+    Returns:
+        game_mode (str)
+    """
+
     possible_modes = {'1': 'PvP', '2': 'PvC', '3': 'CvC'}
 
     menu = '''

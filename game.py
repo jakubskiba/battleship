@@ -48,6 +48,13 @@ class Game:
             self.players[key].my_turn = not self.players[key].my_turn
 
     def __str__(self):
+        """
+        Method overloads the str operator
+
+        Returns:
+            str_ship (str): string used by print function
+        """
+
         current_player = self.get_operating_player()
         waiting_player = self.get_waiting_player()
 
