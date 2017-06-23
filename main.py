@@ -1,4 +1,4 @@
-import os, time
+import os
 from game import Game
 from ship import Ship
 from random import randint, choice
@@ -195,7 +195,6 @@ def intro(file_name):
     Args:
         file_name: name of the file with image art
     """
-
     color = ['\033[31m', '\033[32m', '\033[33m', '\033[34m', '\033[35m', '\033[36m', '\033[37m']
     reset_color = '\033[0m'
 
@@ -257,7 +256,6 @@ def main():
         game.switch_turn()
         waiting_player = game.get_waiting_player()
         current_player = game.get_operating_player()
-
 
     print('Congratulations!', waiting_player.name, 'won!')
 

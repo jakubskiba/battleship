@@ -46,4 +46,5 @@ class ArtificialIntelligence:
                 hit_coordinates = self.mode.search_ship_algorithm()
         else:
             raise ValueError("Invalid difficulty level")
+
         return hit_coordinates
