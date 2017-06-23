@@ -186,6 +186,10 @@ def ask_user_for_ships(ocean):
 
 
 def randomize_single_ship(ship_name):
+    """
+
+    """
+
     row = randint(1, 10)
     column = randint(1, 10)
     is_vertical = choice([False, True])
@@ -195,6 +199,10 @@ def randomize_single_ship(ship_name):
 
 
 def randomize_ships(ocean):
+    """
+    Places ships randomly
+    """
+
     ships_names = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer']
     for ship_name in ships_names:
         new_ship = randomize_single_ship(ship_name)
@@ -238,15 +246,89 @@ def read_highscore_file():
     return sorted(highscores)
 
 
-def append_highscore_file():
+def append_highscore_file(highscores):
     """
+    Writes highscore list to file
+
+    Args:
+        highscores(list)
+    Return None
     """
+
     FILE_PATH = 'additional_files/hall_of_fame.csv'
-    with open(FILE_PATH, 'w') as f:
-        pass
+    with open(FILE_PATH, 'r+') as f:
+        for highscore in highscores:
+            f.write(highscore+'\n')
+
+
+def update_highscore(win_player, lost_player):
+    """
+    Places current game score in highscores and call append_highscore_file function
+
+    Args:
+        win_player(obj): player object
+        lost_player(obj): player object
+    """
+
+    score = str(win_player.count_unhited_squares())
+    highscores = read_highscore_file()
+    is_added = False
+    for i in range(len(highscores)):
+        highscore = highscores[i].split(':')[0]
+        if int(score) > int(highscore):
+            message = score + ': ' + win_player.name + ' won versus ' + lost_player.name
+            highscores.insert(i, message)
+            is_added = True
+            break
+
+    if not is_added:
+        highscores.append(score + ': ' + win_player.name)
+
+    append_highscore_file(highscores)
+
+
+def print_highscore():
+    """
+    Print 10 lines of hall of fame file
+    """
+
+    os.system('clear')
+    print('HALL OF FAME')
+    print(' ' + '_' * 61)
+    print('|{:>30}|{:>30}|'.format('winner', 'unhited squares').replace(' ', '_'))
+    highscores = read_highscore_file()
+    for highscore in highscores[:10]:
+        highscore = highscore.split(': ')
+        print('|{:>30}|{:>30}|'.format(highscore[1], highscore[0]).replace(' ', '_'))
+
+    input('Press any key')
+
+
+def placing_ships(current_player, waiting_player):
+    """
+    Switches between placing ships by human and computer
+    """
+
+    current_player.ocean.is_owner_looking = True
+    print(current_player.name, 'set your ships!')
+    if current_player.is_human:
+        ask_user_for_ships(current_player.ocean)
+    else:
+        randomize_ships(current_player.ocean)
+
+    os.system('clear')
+
+    waiting_player.ocean.is_owner_looking = True
+    print(waiting_player.name, 'set your ships!')
+    if waiting_player.is_human:
+        ask_user_for_ships(waiting_player.ocean)
+    else:
+        randomize_ships(waiting_player.ocean)
 
 
 def main():
+    print_highscore()
+
     intro('additional_files/intro_art.txt')
 
     game_mode = choose_game_mode()
@@ -272,21 +354,7 @@ def main():
     os.system('clear')
 
     # placing ships
-    current_player.ocean.is_owner_looking = True
-    print(current_player.name, 'set your ships!')
-    if current_player.is_human:
-        ask_user_for_ships(current_player.ocean)
-    else:
-        randomize_ships(current_player.ocean)
-
-    os.system('clear')
-
-    waiting_player.ocean.is_owner_looking = True
-    print(waiting_player.name, 'set your ships!')
-    if waiting_player.is_human:
-        ask_user_for_ships(waiting_player.ocean)
-    else:
-        randomize_ships(waiting_player.ocean)
+    placing_ships(current_player, waiting_player)
 
     while not current_player.ocean.end_game():
         # game main loop
@@ -324,12 +392,9 @@ def main():
         game.switch_turn()
         waiting_player = game.get_waiting_player()
         current_player = game.get_operating_player()
-    print(game)
+
     print('Congratulations!', waiting_player.name, 'won!')
-    score = str(waiting_player.count_unhited_squares())
-    highscores = read_highscore_file()
-    highscores.append(score + ': ' + waiting_player.name)
-    print(highscores)
+    update_highscore(waiting_player, current_player)
 
 
 if __name__ == '__main__':
