@@ -260,9 +260,12 @@ def read_highscore_file():
     highscores = []
 
     FILE_PATH = 'additional_files/hall_of_fame.csv'
-    with open(FILE_PATH, 'r') as f:
-        for line in f:
-            highscores.append(line.replace('\n', ''))
+    try:
+        with open(FILE_PATH, 'r') as f:
+            for line in f:
+                highscores.append(line.replace('\n', ''))
+    except FileNotFoundError:
+        open(FILE_PATH, 'w').close()
 
     return sorted(highscores)
 
