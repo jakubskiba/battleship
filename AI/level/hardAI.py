@@ -39,34 +39,36 @@ class HardAI(AbstractAI):
     def check_is_hit(self):
         row_num, column_num = self.search_ship_algorithm()
         if self.enemy_board[row_num][column_num].state == "□":
+            self.enemy_board[row_num][column_num].state = "X"
             self.last_target = row_num, column_num
             self.is_hit = True
             self.hunting_mode = True
 
     def ship_hunt(self):
         water = "~"
+        ship = "□"
         row_num, column_num = self.last_target
 
         try:
-            if self.enemy_board[row_num][column_num + 1].state == water:
+            if self.enemy_board[row_num][column_num + 1].state in [water, ship]:
                 self.possible_hits.append((row_num, column_num + 1))
         except IndexError:
             pass
 
         try:
-            if self.enemy_board[row_num][column_num - 1].state == water:
+            if self.enemy_board[row_num][column_num - 1].state in [water, ship]:
                 self.possible_hits.append((row_num, column_num - 1))
         except IndexError:
             pass
 
         try:
-            if self.enemy_board[row_num + 1][column_num].state == water:
+            if self.enemy_board[row_num + 1][column_num].state in [water, ship]:
                 self.possible_hits.append((row_num + 1, column_num))
         except IndexError:
             pass
 
         try:
-            if self.enemy_board[row_num - 1][column_num].state == water:
+            if self.enemy_board[row_num - 1][column_num].state in [water, ship]:
                 self.possible_hits.append((row_num - 1, column_num))
         except IndexError:
             pass

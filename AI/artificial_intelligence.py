@@ -41,7 +41,6 @@ class ArtificialIntelligence:
             if self.mode.hunting_mode:
                 hit_coordinates = self.mode.ship_hunt()
                 self.mode.toggle_hunting_mode(game)
-                print(self.mode.hunting_mode)
             else:
                 hit_coordinates = self.mode.search_ship_algorithm()
         else:
