@@ -31,9 +31,6 @@ class Square:
         self.state = state
 
     def hit(self):
-        """
-        """
-
         possible_changes = {'~': 'O', '□': 'X'}
         hit_messages = {'~': 'Miss!', '□': 'Hit!'}
 
