@@ -29,9 +29,13 @@ __Methods__
   - Returns none
   - Description: generates board list of square objects
 
-* generate_ships(self)
-  - Returns: None
-  - Description: generates ships list and append square objects to their square list
+* check_possibility_of_ship_placement(self, ship)
+  - Returns bool
+  - Description: Simulates placement of each square of ship, if succeed makes real replacement
+
+* place_ship_on_board(self, new_ship)
+  - Returns none
+  - Description: Places provided ship on board
 
 * end_game(self)
   - Returns: bool
